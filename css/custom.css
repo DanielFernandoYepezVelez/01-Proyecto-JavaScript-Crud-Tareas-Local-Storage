@@ -25,17 +25,32 @@ h2 {
     margin-left: .8rem;
 }
 
+.editar-tarea-form {
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 .editar-tarea,
 .editar-tarea:hover {
-    color: rgb(38, 100, 216);
+    padding: .5rem;
+    color: #ffffff;
+    background-color: rgb(38, 100, 216);
+    border-radius: 100%;
 }
 
 .seleccionar-tarea,
 .seleccionar-tarea:hover {
-    color: green;
+    padding: .5rem;
+    color: #ffffff;
+    background-color: green;
+    border-radius: 100%;
 }
 
 .borrar-tarea,
 .borrar-tarea:hover {
-    color: red;
+    padding: .5rem;
+    color: #ffffff;
+    background-color: rgb(255, 0, 0);
+    border-radius: 100%;
 }

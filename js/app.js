@@ -70,7 +70,9 @@ function escribirTarea(e) {
 
 /* Funcionalidad Para Guardar Tarea En El Local Storage */
 function agregarTareaLocalStorage() {
-    if (botonFormulario.classList.contains('editar-tarea')) {
+
+    /* Funcionalidad Para Editar Una Tarea Existente */
+    if (botonFormulario.classList.contains('editar-tarea-form')) {
         let arrayLocalStorage, posicionElemento, tareasLocalStorage;
 
         arrayLocalStorage = obtenerDatosLocalStorage();
@@ -88,11 +90,8 @@ function agregarTareaLocalStorage() {
         tareasLocalStorage = JSON.parse(localStorage.getItem('tareas'));
         renderizarDatosLocalStorage(tareasLocalStorage);
 
-        botonFormulario.classList.remove('editar-tarea');
+        botonFormulario.classList.remove('editar-tarea-form');
 
-        if (!botonFormulario.classList.contains('editar-tarea')) {
-            console.log('La clase se elimino correctamente');
-        }
     } else {
         let arrayLocalStorage = obtenerDatosLocalStorage();
         arrayLocalStorage.push(textArea.value);
@@ -157,7 +156,7 @@ function editarTareaDOM(stringDOM) {
     }
 
     localStorage.setItem('tareas', JSON.stringify(arrayLocalStorage));
-    botonFormulario.classList.add('editar-tarea');
+    botonFormulario.classList.add('editar-tarea-form');
 }
 
 /* Funcionalidad Para Seleccionar Una Tarea */
