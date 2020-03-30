@@ -1,0 +1,41 @@
+h1,
+h2 {
+    text-align: center;
+}
+
+#contenido {
+    margin-top: 40px;
+}
+
+.nueva {
+    text-decoration: line-through;
+}
+
+.lista-tareas {
+    display: flex;
+}
+
+.editar-tarea,
+.seleccionar-tarea,
+.borrar-tarea {
+    cursor: pointer;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: .8rem;
+}
+
+.editar-tarea,
+.editar-tarea:hover {
+    color: rgb(38, 100, 216);
+}
+
+.seleccionar-tarea,
+.seleccionar-tarea:hover {
+    color: green;
+}
+
+.borrar-tarea,
+.borrar-tarea:hover {
+    color: red;
+}
