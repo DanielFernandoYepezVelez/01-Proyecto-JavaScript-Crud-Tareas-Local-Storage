@@ -64,13 +64,13 @@ function escribirTarea(e) {
         agregarTareaLocalStorage();
         textArea.value = '';
     } else {
-        console.log('La tarea escrita es una cadena de texto vacia, por ende, no se va a agregar en el Local Storage');
+        console.log();
+        window.confirm('La Tarea Escrita Es Una Cadena De Texto Vacia, Por Ende, No Se Va A Agregar Una Tarea.');
     }
 }
 
 /* Funcionalidad Para Guardar Tarea En El Local Storage */
 function agregarTareaLocalStorage() {
-
     /* Funcionalidad Para Editar Una Tarea Existente */
     if (botonFormulario.classList.contains('editar-tarea-form')) {
         let arrayLocalStorage, posicionElemento, tareasLocalStorage;
@@ -91,7 +91,6 @@ function agregarTareaLocalStorage() {
         renderizarDatosLocalStorage(tareasLocalStorage);
 
         botonFormulario.classList.remove('editar-tarea-form');
-
     } else {
         let arrayLocalStorage = obtenerDatosLocalStorage();
         arrayLocalStorage.push(textArea.value);
@@ -129,7 +128,7 @@ function estadoTarea(e) {
     const elementoDOM = e.target.parentElement;
 
     if (e.target.classList.contains('editar-tarea')) {
-        editarTareaDOM(elementoDOM.textContent);
+        editarTareaDOM(elementoDOM);
 
     } else if (e.target.classList.contains('seleccionar-tarea')) {
         seleccionarTareaDOM(elementoDOM);
@@ -141,35 +140,51 @@ function estadoTarea(e) {
 
 /* Funcionalidad Para Editar Una Tarea */
 function editarTareaDOM(stringDOM) {
-    let cadena, arrayLocalStorage, posicionElemento;
+    if (!stringDOM.classList.contains('nueva')) {
+        let DOM = stringDOM.textContent;
+        let cadena, arrayLocalStorage, posicionElemento;
 
-    cadena = stringDOM.substr(0, (stringDOM.length - 4));
-    textArea.value = cadena;
+        cadena = DOM.substr(0, (DOM.length - 4));
+        textArea.value = cadena;
 
-    arrayLocalStorage = obtenerDatosLocalStorage();
-    posicionElemento = arrayLocalStorage.indexOf(cadena);
+        arrayLocalStorage = obtenerDatosLocalStorage();
+        posicionElemento = arrayLocalStorage.indexOf(cadena);
 
-    for (let index = 0; index < arrayLocalStorage.length; index++) {
-        if (index === posicionElemento) {
-            arrayLocalStorage.splice(posicionElemento, 1, ('No Actualizaste La Tarea #' + (index + 1)));
+        for (let index = 0; index < arrayLocalStorage.length; index++) {
+            if (index === posicionElemento) {
+                arrayLocalStorage.splice(posicionElemento, 1, ('No Actualizaste La Tarea #' + (index + 1)));
+            }
         }
-    }
 
-    localStorage.setItem('tareas', JSON.stringify(arrayLocalStorage));
-    botonFormulario.classList.add('editar-tarea-form');
+        localStorage.setItem('tareas', JSON.stringify(arrayLocalStorage));
+        botonFormulario.classList.add('editar-tarea-form');
+    } else {
+        window.confirm('No Se Puede Editar Mientras El CheckBox Este Activo.');
+    }
 }
 
 /* Funcionalidad Para Seleccionar Una Tarea */
 function seleccionarTareaDOM(contenidoSeleccionado) {
     /* Activa o desactiva una clase con un click*/
-    contenidoSeleccionado.classList.toggle('nueva');
+    if (!botonFormulario.classList.contains('editar-tarea-form')) {
+        contenidoSeleccionado.classList.toggle('nueva');
+    } else {
+        window.confirm('No Se Puede Activar El CheckBox Mientras Se Este Editando.');
+    }
 }
 
 /* Funcionalidad Para Eliminar Una Tarea Del DOM */
 function eliminarTareaDOM(contenidoAeliminar) {
-    contenidoAeliminar.remove();
-    eliminarLocalStorage(contenidoAeliminar.textContent);
-    console.log('Eliminando Tarea');
+    if (!botonFormulario.classList.contains('editar-tarea-form')) {
+
+        if (window.confirm('Seguro Desea Eliminar La Tarea')) {
+            contenidoAeliminar.remove();
+            eliminarLocalStorage(contenidoAeliminar.textContent);
+        }
+
+    } else {
+        window.confirm('No Se Puede Remover Una Tarea Mientras Se Este Editando.');
+    }
 }
 
 /* Funcionalidad Para Eliminar Una Tarea Del Local Storage */
@@ -182,5 +197,5 @@ function eliminarLocalStorage(stringDOM) {
 
     /* Recibe la posicion que se va a eliminar y su expancion */
     arrayLocalStorage.splice(posicionElemento, 1);
-    let elementoEliminado = localStorage.setItem('tareas', JSON.stringify(arrayLocalStorage));
+    localStorage.setItem('tareas', JSON.stringify(arrayLocalStorage));
 }
